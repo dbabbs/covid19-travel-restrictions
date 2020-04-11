@@ -1,0 +1,301 @@
+cameras:
+  camera1:
+    type: perspective
+    position:
+      - 1
+      - 1
+      - 2.4
+sources:
+  omv:
+    type: OMV
+    max_zoom: 17
+    min_display_zoom: 1
+    tiled: true
+global:
+  language: en
+  language_text_source: "function() { return (global.language && feature['name:'+global.language]) || feature.name;\n}\n"
+  water: "#E1E2E3"
+  text: "#9B9DA2"
+  minor_text: "#AFB1B5"
+  text_outline: "#FFF"
+
+  #Category 1
+  highway: "#FFFFFF"
+  highway_outline: "#E1E2E3"
+
+  #Cateogry 2
+  primary_road_start: "#FFC800"
+  primary_road_end: "#FFFC90"
+  primary_road_outline: "#E4E7E8"
+
+  #Small
+  road: "#F5F5F5"
+  road_outline: "#F5F5F5"
+
+  background: "#F5F5F5"
+  buildings: "#E8E8E8"
+  land: "#000"
+  landuse_category_1: "#EBEBEC"
+  university: "#F5F5F5"
+  hospital: "#ECD5D8"
+  military: "#F5F5F5"
+  airport: "#e3e6ee"
+  runway: "#d8dce7"
+  water_park: "rgba(169, 204, 230, 0)"
+  sports_complex: "#A4DBD7"
+  park: "#A8E6D1"
+  national_park: "#A8E6D1"
+  congestion_zone: "rgba(0, 0, 0, 0)"
+  country_boundary: "#CCCDCF"
+  region_boundary: "#E1E2E3"
+  country_text: "#9B9DA2"
+  icon_size: "12px"
+  
+  textures:
+  icon_library:
+    url: ./sprite-2x.png
+    density: 2
+    sprites:
+      square: [82, 74, 22, 22]
+      circle: [180, 74, 22, 22]
+
+styles:
+  polygons_transparent:
+    base: polygons
+    blend: opaque
+    blend_order: 1
+  translucent-lines:
+    base: lines
+    blend: translucent
+fonts:
+  FiraGO:
+    - weight: 400
+      url: "https://assets.vector.hereapi.com/fonts/FiraGO-Regular.ttf"
+    - weight: 400
+    - style: italics
+      url: "https://assets.vector.hereapi.com/fonts/FiraGO-Italic.ttf"
+    - weight: 500
+      url: "https://assets.vector.hereapi.com/fonts/FiraGO-Medium.ttf"
+scene:
+  background:
+    color: global.background
+  sky:
+    zenith: "rgba(55, 149, 161, 1)"
+    horizon: "rgba(185, 240, 255, 1)"
+    fog: "rgba(239, 244, 245, 1)"
+layers:
+  boundaries:
+    data: { source: omv, layer: boundaries }
+    draw:
+      translucent-lines:
+        order: 500
+    country:
+      filter:
+        kind: country
+      draw:
+        translucent-lines:
+          color: global.country_boundary
+          width: 1.75px
+    region:
+      filter:
+        kind: region
+        kind_detail: [3, 4]
+      draw:
+        translucent-lines:
+          color: global.region_boundary
+          width: 1.5px
+  places:
+    data:
+      source: omv
+    country:
+      filter:
+        kind: country
+      draw:
+        text:
+          text_source: global.language_text_source
+          priority: 1
+          order: 10000
+          font:
+            family: FiraGO
+            weight: 400
+            fill: global.country_text
+            stroke:
+              color: rgba(255, 255, 255, 0.5)
+              width: 3
+            size:
+              - - 4
+                - 12px
+              - - 5
+                - 13px
+              - - 10
+                - 16px
+              - - 12
+                - 22px
+            buffer: 5px
+            transform: uppercase
+    region:
+      filter:
+        kind: region
+        kind_detail: [state, province]
+        $zoom:
+          min: 5
+      draw:
+        text:
+          text_source: global.language_text_source
+          priority: 1
+          order: 10000
+          font:
+            family: FiraGO
+            weight: 400
+            fill: global.minor_text
+            stroke:
+              color: rgba(255, 255, 255, 0.1)
+              width: 3
+            size:
+              - - 5
+                - 13px
+              - - 12
+                - 22px
+            buffer: 5px
+    capital-cities:
+      filter:
+        kind: locality
+        kind_detail: city
+        country_capital: true
+        $zoom:
+          min: 5
+      draw:
+        points:
+          color: global.text
+          size:
+            - - 4
+              - 4px
+            - - 10
+              - 8px
+          stroke:
+            color: rgba(255, 255, 255, 0.8)
+            width: 3
+          priority: 3
+          order: 10000
+          text:
+            text_source: global.language_text_source
+            priority: 3
+            order: 10000
+            font:
+              family: FiraGO
+              weight: 500
+              fill: global.text
+              stroke:
+                color: rgba(255, 255, 255, 0.8)
+                width: 3
+              size:
+                - - 4
+                  - 12px
+                - - 10
+                  - 18px
+              buffer: 5px
+        
+    city-points:
+      filter:
+        kind: locality
+        kind_detail: city
+        country_capital: false
+        $zoom:
+          min: 7
+      draw:
+        text:
+          text_source: global.language_text_source
+          priority: 5
+          order: 10000
+          font:
+            family: FiraGO
+            weight: 500
+            fill: global.text
+            stroke:
+              color: rgba(255, 255, 255, 0.75)
+              width: 3
+            size:
+              - - 7
+                - 12px
+              - - 10
+                - 14px
+            buffer: 5px
+  landuse:
+    data:
+      source: omv
+    # national_park:
+    #   filter:
+    #     kind: national_park
+    #   draw:
+    #     polygons:
+    #       order: "function() { return feature.sort_rank; }"
+    #       color: global.national_park
+
+  water:
+    data:
+      source: omv
+    draw:
+      polygons:
+        order: "function() { return feature.sort_rank; }"
+        color: global.water
+  roads:
+    data:
+      source: omv
+    filter:
+      not:
+        kind:
+          - path
+          - rail
+          - ferry
+    draw:
+      lines:
+        order: "function() { return feature.sort_rank; }"
+        color: global.road
+        width: [12, 18, 18, 11]
+        cap: round
+    # highway:
+    #   filter:
+    #     kind: highway
+    #   draw:
+    #     lines:
+    #       order: "function() { return feature.sort_rank; }"
+    #       color: global.highway
+    #       width:
+    #         - - 1
+    #           - 8000
+    #         - - 8
+    #           - 2000
+    #         - - 9
+    #           - 700
+    #         - - 10
+    #           - 400
+    #         - - 12
+    #           - 100
+    #         - - 14
+    #           - 30
+    #         - - 18
+    #           - 30
+    #       outline:
+    #         color: global.highway_outline
+    #         width:
+    #           - - 8
+    #             - 30
+    #           - - 18
+    #             - 2
+    #   label:
+    #     filter:
+    #       all:
+    #         - $zoom:
+    #             min: 11
+    #     draw:
+    #       text:
+    #         repeat_distance: 20px
+    #         font:
+    #           text_source: global.language_text_source
+    #           family: FiraGo
+    #           size: 12px
+    #           priority: 1
+    #           fill: global.text
+    #           stroke:
+    #             color: white
+    #             width: 2

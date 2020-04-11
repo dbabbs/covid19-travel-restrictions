@@ -1,0 +1,103 @@
+:root {
+   --spacing: 15px;
+   --black: #333;
+}
+
+@font-face {
+   font-family: FiraGO;
+   src: url(../static/fonts/FiraGO-Regular.woff);
+}
+
+@font-face {
+   font-family: FiraGO;
+   src: url(../static/fonts/FiraGO-Bold.woff);
+   font-weight: bold;
+}
+
+@font-face {
+   font-family: FiraGO;
+   src: url(../static/fonts/FiraGO-Medium.woff);
+   font-weight: 500;
+}
+
+body,
+html {
+   border: 0;
+   margin: 0;
+   padding: 0;
+   font-family: FiraGO, serif;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+   color: var(--black);
+}
+.map {
+   height: 100vh;
+   width: 100vw;
+   position: absolute;
+}
+
+.sidebar {
+   position: absolute;
+   left: var(--spacing);
+   top: var(--spacing);
+   padding: var(--spacing);
+   z-index: 50000;
+   background: white;
+   border-radius: 2px;
+   box-shadow: 0px 0px 5px rgb(200, 200, 200);
+}
+
+.tooltip {
+   position: absolute;
+   padding: var(--spacing);
+   z-index: 50000;
+   background: white;
+   border-radius: 2px;
+   box-shadow: 0px 0px 5px rgb(200, 200, 200);
+   width: 200px;
+   display: none;
+}
+
+.tooltip > div {
+   margin-bottom: 5px;
+}
+.tooltip > div:last-child {
+   margin-bottom: 0;
+}
+.tooltip .title-row {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.tooltip .title {
+   font-size: 18px;
+   font-weight: 500;
+}
+
+.tooltip .flag {
+   height: 20px;
+   /* border-radius: 2px; */
+}
+
+.tooltip .title {
+}
+
+.tooltip .status {
+}
+
+.tooltip .description {
+   font-size: 13px;
+   color: rgb(150, 150, 150);
+}
+
+.pill {
+   font-size: 12px;
+   font-weight: 500;
+   display: inline-block;
+   background: black;
+   padding: 3px 6px;
+   border-radius: 2px;
+   color: white;
+   text-transform: uppercase;
+}
