@@ -1,11 +1,10 @@
-import constructPolygon from './constructCountryOutline.js';
-import { countryMap } from './countries.js';
-import geometryFetcher from './GeometyFetcher.js';
+import constructMapPolygon from './constructMapPolygon.js';
 import Tooltip from './Tooltip.js';
-import { apikey, center, zoom } from './config.js';
+import { credentials, center, zoom, minZoom, maxZoom } from './config.js';
+import { fetchCountryData, fetchCountryBoundaries } from './fetchData.js';
 
 const tooltip = new Tooltip();
-const platform = new H.service.Platform({ apikey });
+const platform = new H.service.Platform({ apikey: credentials.apikey });
 const defaultLayers = platform.createDefaultLayers();
 const map = new H.Map(
    document.querySelector('.map'),
@@ -16,25 +15,23 @@ const map = new H.Map(
       pixelRatio: window.devicePixelRatio || 1,
    }
 );
-
-const router = platform.getRoutingService();
 window.addEventListener('resize', () => map.getViewPort().resize());
 const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 const provider = map.getBaseLayer().getProvider();
 const style = new H.map.Style('../static/map-style.yaml');
 provider.setStyle(style);
 
-defaultLayers.vector.normal.map.setMax(4);
-defaultLayers.vector.normal.map.setMin(2);
+defaultLayers.vector.normal.map.setMax(maxZoom);
+defaultLayers.vector.normal.map.setMin(minZoom);
 
-async function addCountryOutline(iso3) {
-   const object = await constructPolygon(iso3);
+async function addObjectToMap(feature) {
+   const object = await constructMapPolygon(feature);
 
    object.addEventListener('pointerenter', (evt) => {
       const { clientX: x, clientY: y } = evt.originalEvent;
       tooltip.show();
       tooltip.position({ x, y });
-      tooltip.setContent({ code: iso3 });
+      tooltip.setContent(feature.properties);
    });
 
    object.addEventListener('pointermove', (evt) => {
@@ -49,63 +46,21 @@ async function addCountryOutline(iso3) {
    map.addObject(object);
 }
 
-addCountryOutline('schengen');
-
-const schengen = [
-   'Austria',
-   'Hungary',
-   'Norway',
-   'Belgium',
-   'Iceland',
-   'Poland',
-   'Czech Republic',
-   'Italy',
-   'Portugal',
-   'Denmark',
-   'Latvia',
-   'Slovakia',
-   'Estonia',
-   'Liechtenstein',
-   'Slovenia',
-   'Finland',
-   'Lithuania',
-   'Spain',
-   'France',
-   'Luxembourg',
-   'Sweden',
-   'Germany',
-   'Malta',
-   'Switzerland',
-   'Greece',
-   'Netherlands',
-].map((c) => {
-   return {
-      name: c,
-      iso3: countryMap.find((x) => x.name === c).iso3,
-   };
-});
-
 (async () => {
-   const geometries = schengen.map((x) => geometryFetcher.retrieve(x.iso3));
-   const promises = await Promise.all(geometries);
-   console.log(promises);
+   const data = await fetchCountryData();
+   const codes = data.map((x) => x.code);
 
-   // const union = turf.union(promises[0], promises[1]);
-   // console.log(JSON.stringify(union));
+   const boundaries = await fetchCountryBoundaries(codes);
+   console.log(
+      'feature lengths match: ' + (data.length === boundaries.features.length)
+   );
 
-   // let union = turf.union(promises[0], promises[1]);
-   // for (let i = 1; i < promises.length - 1; i++) {
-   //    try {
-   //       const newUnion = turf.union(promises[i], promises[i + 1]);
-   //       union = { ...newUnion };
-   //       console.log(union);
-   //    } catch {
-   //       // i++;
-   //       const newUnion = turf.union(promises[i], promises[i + 2]);
-   //       union = { ...newUnion };
-   //       console.log(union);
-   //       console.log('failed');
-   //    }
-   // }
-   // console.log(JSON.stringify(union));
+   const joined = boundaries.features.map((x) => {
+      x.properties = data.find((z) => x.properties.ADM0_A3 === z.code);
+      return x;
+   });
+
+   joined.forEach((country) => {
+      addObjectToMap(country);
+   });
 })();

@@ -9,12 +9,47 @@ const colors = {
    red: '#E53E3E',
 };
 
-const apikey = 'qHbGACVC8wUgzipkERYFIvbK8ASY9UhPsKSGTB7quRI';
+const credentials = {
+   id: 'gpk6hVhN',
+   token: 'AFKCs6eeSxSYhpbswZsUhgA',
+   apikey: 'qHbGACVC8wUgzipkERYFIvbK8ASY9UhPsKSGTB7quRI',
+};
 
 const center = {
    lat: 40,
    lng: -0,
 };
 const zoom = 2;
+const minZoom = 1;
+const maxZoom = 5;
 
-export { colors, apikey, center, zoom };
+const schengen = [
+   'Austria',
+   'Hungary',
+   'Norway',
+   'Belgium',
+   'Iceland',
+   'Poland',
+   'Czech Republic',
+   'Italy',
+   'Portugal',
+   'Denmark',
+   'Latvia',
+   'Slovakia',
+   'Estonia',
+   'Liechtenstein',
+   'Slovenia',
+   'Finland',
+   'Lithuania',
+   'Spain',
+   'France',
+   'Luxembourg',
+   'Sweden',
+   'Germany',
+   'Malta',
+   'Switzerland',
+   'Greece',
+   'Netherlands',
+];
+
+export { colors, credentials, center, zoom, minZoom, maxZoom };

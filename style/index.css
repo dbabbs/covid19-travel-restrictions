@@ -29,6 +29,7 @@ html {
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
    color: var(--black);
+   overflow: hidden;
 }
 .map {
    height: 100vh;
