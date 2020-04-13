@@ -64,4 +64,63 @@ async function addObjectToMap(feature) {
    joined.forEach((country) => {
       addObjectToMap(country);
    });
+
+   populateSidebar(joined);
 })();
+
+function populateSidebar(data) {
+   const classifications = [
+      ...new Set(data.map((x) => x.properties.classification)),
+   ];
+   const categories = {};
+   data.forEach((row) => {
+      if (categories.hasOwnProperty(row.properties.classification)) {
+         categories[row.properties.classification].push({
+            name: row.properties.country,
+            code: row.properties.code,
+         });
+      } else {
+         categories[row.properties.classification] = [
+            {
+               name: row.properties.country,
+               code: row.properties.code,
+            },
+         ];
+      }
+   });
+   console.log(categories);
+
+   Object.keys(categories).forEach((row) => {
+      // console.log(row[categories]);
+      const node = manufactureSection(row, categories[row]);
+      document.querySelector('.sidebar').appendChild(node);
+   });
+}
+function manufactureSection(category, countries) {
+   const numFlags = 3;
+   const node = document.createElement('div');
+   node.classList.add('section');
+   node.innerHTML = `
+   <div>
+      <div>${category}</div>
+      <div class="small">${countries.length} ${
+      countries.length > 1 ? 'countries' : 'country'
+   }</div>
+
+   </div>
+   <div class="flag-section">
+      ${countries
+         .slice(0, numFlags)
+         .sort((a, b) => b.name - a.name)
+         .map(
+            (item, index) =>
+               `<div style="transform: translateX(${
+                  (numFlags - index) * 12
+               }px);" class="cropper">
+                  <img src="https://restcountries.eu/data/${item.code.toLowerCase()}.svg" />
+               </div>`
+         )
+         .join('')}
+   </div>`;
+   return node;
+}

@@ -53,6 +53,7 @@ html {
 }
 
 .sidebar h1 {
+   font-size: 26px;
    margin-top: 0;
 }
 
@@ -66,7 +67,6 @@ html {
 
 .sidebar .section {
    border-top: 1px solid rgb(220, 220, 220);
-   border-bottom: 1px solid rgb(220, 220, 220);
    padding: var(--spacing);
    transition: 0.3s all;
    cursor: pointer;
@@ -78,17 +78,41 @@ html {
    justify-content: space-between;
 }
 
+.sidebar .section:last-child {
+   border-bottom: 1px solid rgb(220, 220, 220);
+}
+
+.section .small {
+   margin-top: 5px;
+   color: var(--gray);
+   font-size: 14px;
+}
+
 .flag-section {
    position: relative;
    height: 20px;
    width: 60px;
 }
 
-.flag-section img {
-   height: 20px;
+.flag-section .cropper {
    position: absolute;
+   height: 20px;
+   width: 20px;
+   /* position: relative; */
+   overflow: hidden;
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
    border: 1px solid white;
-   border-radius: 2px;
+   box-shadow: 0px 0px 2px rgb(231, 231, 231);
+}
+
+.flag-section img {
+   /* position: absolute; */
+
+   height: 100%;
+   width: auto;
    /* box-shadow: 0px 0px 2px white; */
 }
 
