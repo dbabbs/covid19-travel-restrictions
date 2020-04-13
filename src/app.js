@@ -53,7 +53,9 @@ async function addObjectToMap(feature) {
 
    map.addObject(object);
 }
-
+for (let i = 0; i < 3; i++) {
+   document.querySelector('.sections').appendChild(manufactureSection());
+}
 (async () => {
    const data = await fetchCountryData();
    const codes = data.map((x) => x.code);
@@ -72,6 +74,9 @@ async function addObjectToMap(feature) {
    joined.forEach((country) => {
       addObjectToMap(country);
    });
+
+   document.querySelector('.loading-container').style.opacity = 0;
+   document.querySelector('.loading-container').style.visibility = 'hidden';
 
    populateSidebar(joined);
 })();
@@ -98,17 +103,31 @@ function populateSidebar(data) {
    });
    console.log(categories);
 
+   document.querySelector('.sections').innerHTML = '';
    Object.keys(categories).forEach((row) => {
       // console.log(row[categories]);
       const node = manufactureSection(row, categories[row]);
-      document.querySelector('.sidebar').appendChild(node);
+      document.querySelector('.sections').appendChild(node);
    });
 }
 function manufactureSection(category, countries) {
+   if (category === undefined && countries === undefined) {
+      console.log('shimmer time');
+      const node = document.createElement('div');
+      node.classList.add('section');
+      node.innerHTML = `
+      <div class="top top-inner">
+         <div>
+            <div style="width: 200px" class="shine">adfasdfa</div>
+            <div style="width: 100px" class="small shine">asdfadsf</div>
+         </div>
+         <div class="flag-section"></div>
+      </div>`;
+      return node;
+   }
    const numFlags = 3;
    const node = document.createElement('div');
    node.classList.add('section');
-   node.style.borderRight = '4px solid ' + colorMap[category];
    node.onmouseenter = () => {
       node.style.background = hexToRgba(colorMap[category], 0.08);
    };
@@ -117,25 +136,47 @@ function manufactureSection(category, countries) {
    };
    // node.style.marginLeft = '3px';
    node.innerHTML = `
+   <div onclick="handleClick()" class="top" style="border-right: 4px solid ${
+      colorMap[category]
+   };">
+   <div class="top-inner">
    <div>
-      <div>${category}</div>
-      <div class="small">${countries.length} ${
+   <div>${category}</div>
+   <div class="small">${countries.length} ${
       countries.length > 1 ? 'countries' : 'country'
    }</div>
+</div>
+<div class="flag-section">
+   ${countries
+      .slice(0, numFlags)
+      .sort((a, b) => b.name - a.name)
+      .map(
+         (item, index) =>
+            `<div style="position: absolute; transform: translateX(${
+               (numFlags - index) * 12
+            }px);" class="cropper">
+               <img src="https://restcountries.eu/data/${item.code.toLowerCase()}.svg" />
+            </div>`
+      )
+      .join('')}
+</div>
+</div>
    </div>
-   <div class="flag-section">
+   <div class="bottom">
       ${countries
-         .slice(0, numFlags)
-         .sort((a, b) => b.name - a.name)
          .map(
-            (item, index) =>
-               `<div style="transform: translateX(${
-                  (numFlags - index) * 12
-               }px);" class="cropper">
-                  <img src="https://restcountries.eu/data/${item.code.toLowerCase()}.svg" />
-               </div>`
+            (item) =>
+               `<div class="country-row">
+                  ${item.name}
+                  <div class="cropper">
+                     <img src="https://restcountries.eu/data/${item.code.toLowerCase()}.svg" />
+                  </div>
+               </div>
+      `
          )
          .join('')}
-   </div>`;
+
+   </div>
+   `;
    return node;
 }

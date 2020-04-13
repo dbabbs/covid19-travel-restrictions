@@ -36,13 +36,39 @@ html {
    width: 100vw;
 }
 
-.map {
+.map-container {
    height: 100%;
    width: 100%;
    flex: 1;
-   background: black;
+   position: relative;
 }
 
+.loading-container,
+.map {
+   position: absolute;
+   height: 100%;
+   width: 100%;
+}
+
+.loading-container {
+   display: flex;
+   z-index: 50000;
+   align-items: center;
+   justify-content: center;
+   pointer-events: none;
+   visibility: visible;
+   opacity: 1;
+   transition: 0.3s all;
+}
+
+.loading-container img {
+   height: 40px;
+   width: 40px;
+   background: white;
+   border-radius: 3px;
+   padding: 5px;
+   box-shadow: 0px 0px 5px rgb(200, 200, 200);
+}
 .sidebar {
    width: 320px;
    /* padding: var(--spacing); */
@@ -50,6 +76,7 @@ html {
    background: white;
    border-radius: 2px;
    box-shadow: 0px 0px 5px rgb(200, 200, 200);
+   overflow-y: scroll;
 }
 
 .sidebar h1 {
@@ -67,12 +94,23 @@ html {
 
 .sidebar .section {
    border-top: 1px solid rgb(220, 220, 220);
-   padding: var(--spacing);
+
    transition: 0.2s all;
    cursor: pointer;
    font-weight: 500;
    /* text-transform: uppercase; */
+}
 
+.section .top {
+   padding: var(--spacing);
+}
+
+.bottom {
+   padding: 0 var(--spacing);
+   display: none;
+}
+
+.top-inner {
    display: flex;
    align-items: center;
    justify-content: space-between;
@@ -94,8 +132,8 @@ html {
    width: 60px;
 }
 
-.flag-section .cropper {
-   position: absolute;
+.cropper {
+   /* position: absolute; */
    height: 20px;
    width: 20px;
    /* position: relative; */
@@ -108,7 +146,7 @@ html {
    box-shadow: 0px 0px 2px rgb(231, 231, 231);
 }
 
-.flag-section img {
+.cropper img {
    /* position: absolute; */
 
    height: 100%;
@@ -120,6 +158,14 @@ html {
    background: rgb(250, 250, 250);
 }
 
+.country-row {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 5px 0;
+   color: var(--gray);
+}
+
 .tooltip {
    position: absolute;
    padding: var(--spacing);
@@ -127,7 +173,7 @@ html {
    background: white;
    border-radius: 2px;
    box-shadow: 0px 0px 5px rgb(200, 200, 200);
-   width: 220px;
+   width: 180px;
    display: none;
 }
 
@@ -173,4 +219,37 @@ html {
    border-radius: 2px;
    color: white;
    text-transform: uppercase;
+}
+
+.shine {
+   background: #f6f7f8;
+   background-image: linear-gradient(
+      to right,
+      #f6f7f8 0%,
+      #edeef1 20%,
+      #f6f7f8 40%,
+      #f6f7f8 100%
+   );
+   background-repeat: no-repeat;
+   background-size: 800px 104px;
+   /* width: 100%; */
+   display: block;
+   color: transparent !important;
+   /* display: inline-block; */
+   /* position: relative; */
+
+   -webkit-animation-duration: 1s;
+   -webkit-animation-fill-mode: forwards;
+   -webkit-animation-iteration-count: infinite;
+   -webkit-animation-name: placeholderShimmer;
+   -webkit-animation-timing-function: linear;
+}
+@-webkit-keyframes placeholderShimmer {
+   0% {
+      background-position: -468px 0;
+   }
+
+   100% {
+      background-position: 468px 0;
+   }
 }

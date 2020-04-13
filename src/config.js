@@ -12,7 +12,7 @@ const colors = {
 const colorMap = {
    'Borders closed': colors.red,
    'Flights suspended': colors.teal,
-   'Borders closed to most foreigners': colors.purple,
+   'Borders closed to most': colors.purple,
    tbd: colors.blue,
 };
 

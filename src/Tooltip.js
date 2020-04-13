@@ -36,7 +36,9 @@ class Tooltip {
       const content = `
       <div class="title-row">
          <div class="title">${country}</div>
-         <img class="flag" src="${flag(code)}"/>
+         <div class="cropper flag">
+            <img src="${flag(code)}"/>
+         </div>
       </div>
       ${Pill(classification)}
       <div class="description">${description} </div>`;
