@@ -44,7 +44,7 @@ html {
 }
 
 .sidebar {
-   width: 300px;
+   width: 320px;
    /* padding: var(--spacing); */
    z-index: 50000;
    background: white;
@@ -53,7 +53,7 @@ html {
 }
 
 .sidebar h1 {
-   font-size: 26px;
+   font-size: 24px;
    margin-top: 0;
 }
 

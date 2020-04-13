@@ -11,9 +11,9 @@ const colors = {
 
 const colorMap = {
    'Borders closed': colors.red,
-   'Flights suspended': colors.pink,
+   'Flights suspended': colors.teal,
    'Borders closed to most foreigners': colors.purple,
-   tbd: colors.pink,
+   tbd: colors.blue,
 };
 
 const credentials = {

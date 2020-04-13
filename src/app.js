@@ -1,6 +1,13 @@
 import constructMapPolygon from './constructMapPolygon.js';
 import Tooltip from './Tooltip.js';
-import { credentials, center, zoom, minZoom, maxZoom } from './config.js';
+import {
+   credentials,
+   center,
+   zoom,
+   minZoom,
+   maxZoom,
+   colorMap,
+} from './config.js';
 import { fetchCountryData, fetchCountryBoundaries } from './fetchData.js';
 
 const tooltip = new Tooltip();
@@ -100,13 +107,14 @@ function manufactureSection(category, countries) {
    const numFlags = 3;
    const node = document.createElement('div');
    node.classList.add('section');
+   node.style.borderRight = '4px solid ' + colorMap[category];
+   // node.style.marginLeft = '3px';
    node.innerHTML = `
    <div>
       <div>${category}</div>
       <div class="small">${countries.length} ${
       countries.length > 1 ? 'countries' : 'country'
    }</div>
-
    </div>
    <div class="flag-section">
       ${countries
