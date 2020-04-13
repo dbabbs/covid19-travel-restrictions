@@ -9,6 +9,13 @@ const colors = {
    red: '#E53E3E',
 };
 
+const colorMap = {
+   'Borders closed': colors.red,
+   'Flights suspended': colors.pink,
+   'Borders closed to most foreigners': colors.purple,
+   tbd: colors.pink,
+};
+
 const credentials = {
    id: 'gpk6hVhN',
    token: 'AFKCs6eeSxSYhpbswZsUhgA',
@@ -52,4 +59,4 @@ const schengen = [
    'Netherlands',
 ];
 
-export { colors, credentials, center, zoom, minZoom, maxZoom };
+export { colors, credentials, center, zoom, minZoom, maxZoom, colorMap };

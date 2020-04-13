@@ -11,6 +11,9 @@ sources:
     max_zoom: 17
     min_display_zoom: 1
     tiled: true
+scene:
+  background: 
+    color: green
 global:
   language: en
   language_text_source: "function() { return (global.language && feature['name:'+global.language]) || feature.name;\n}\n"

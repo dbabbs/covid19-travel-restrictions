@@ -49,6 +49,7 @@ async function addObjectToMap(feature) {
 (async () => {
    const data = await fetchCountryData();
    const codes = data.map((x) => x.code);
+   console.log(new Set(data.map((x) => x.classification)));
 
    const boundaries = await fetchCountryBoundaries(codes);
    console.log(
