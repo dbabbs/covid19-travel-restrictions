@@ -135,10 +135,29 @@ function manufactureSection(category, countries) {
       node.style.background = '';
    };
    // node.style.marginLeft = '3px';
-   node.innerHTML = `
-   <div onclick="handleClick()" class="top" style="border-right: 4px solid ${
-      colorMap[category]
-   };">
+
+   const bottom = document.createElement('div');
+   bottom.classList.add('bottom');
+   bottom.innerHTML = countries
+      .map(
+         (item) =>
+            `<div class="country-row">
+               ${item.name}
+               <div class="cropper">
+                  <img src="https://restcountries.eu/data/${item.code.toLowerCase()}.svg" />
+               </div>
+            </div>`
+      )
+      .join('');
+
+   const top = document.createElement('div');
+   top.classList.add('top');
+   top.style.borderRight = `4px solid ` + colorMap[category];
+   top.onclick = () => {
+      bottom.style.display =
+         bottom.style.display === 'block' ? 'none' : 'block';
+   };
+   top.innerHTML = `
    <div class="top-inner">
    <div>
    <div>${category}</div>
@@ -160,23 +179,11 @@ function manufactureSection(category, countries) {
       )
       .join('')}
 </div>
-</div>
-   </div>
-   <div class="bottom">
-      ${countries
-         .map(
-            (item) =>
-               `<div class="country-row">
-                  ${item.name}
-                  <div class="cropper">
-                     <img src="https://restcountries.eu/data/${item.code.toLowerCase()}.svg" />
-                  </div>
-               </div>
-      `
-         )
-         .join('')}
-
    </div>
    `;
+   node.appendChild(top);
+
+   node.appendChild(bottom);
+
    return node;
 }
