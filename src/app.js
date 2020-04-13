@@ -9,6 +9,7 @@ import {
    colorMap,
 } from './config.js';
 import { fetchCountryData, fetchCountryBoundaries } from './fetchData.js';
+import hexToRgba from './util/hexToRgba.js';
 
 const tooltip = new Tooltip();
 const platform = new H.service.Platform({ apikey: credentials.apikey });
@@ -108,6 +109,12 @@ function manufactureSection(category, countries) {
    const node = document.createElement('div');
    node.classList.add('section');
    node.style.borderRight = '4px solid ' + colorMap[category];
+   node.onmouseenter = () => {
+      node.style.background = hexToRgba(colorMap[category], 0.08);
+   };
+   node.onmouseleave = () => {
+      node.style.background = '';
+   };
    // node.style.marginLeft = '3px';
    node.innerHTML = `
    <div>

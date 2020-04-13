@@ -27,8 +27,8 @@ const center = {
    lng: -0,
 };
 const zoom = 2;
-const minZoom = 1;
-const maxZoom = 5;
+const minZoom = 2;
+const maxZoom = 4;
 
 const schengen = [
    'Austria',
