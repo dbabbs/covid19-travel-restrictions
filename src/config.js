@@ -9,11 +9,7 @@ const colors = {
    red: '#E53E3E',
 };
 
-const colorMap = {
-   'Borders closed': colors.red,
-   'Flights suspended': colors.teal,
-   'Restricted access': colors.purple,
-};
+const colorMap = ['#000', colors.red, colors.teal, colors.purple];
 
 const credentials = {
    id: 'gpk6hVhN',

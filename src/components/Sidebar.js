@@ -19,7 +19,9 @@ class Sidebar {
 
    addShines() {
       for (let i = 0; i < 3; i++) {
-         this.leftSection.appendChild(this.manufactureShineSection());
+         this.leftSection.appendChild(
+            this.manufactureShineSection(undefined, undefined)
+         );
       }
    }
 
@@ -33,14 +35,21 @@ class Sidebar {
       this.rightSection.style.transform = `translateX(100%)`;
    }
 
-   async setContent(categories) {
+   async setContent(data) {
+      console.log(data);
+      const classifications = [...new Set(data.map((x) => x.classification))];
       await wait(500);
       purgeChildren(this.leftSection);
       document.querySelectorAll('.shine').forEach((node) => {
          node.classList.remove('shine');
       });
-      Object.keys(categories).forEach((row, index) => {
-         const node = this.manufactureSection(row, categories[row], index);
+
+      classifications.forEach((classification, index) => {
+         const matches = data.filter(
+            (x) => x.classification === classification
+         );
+         console.log(matches);
+         const node = this.manufactureSection(matches, index);
          this.leftSection.appendChild(node);
       });
 
@@ -97,7 +106,8 @@ class Sidebar {
       return node;
    }
 
-   manufactureSection(category, countries, index) {
+   manufactureSection(countries, index) {
+      const { classification, classification_id: id } = countries[0];
       const numFlags = 3;
       const node = document.createElement('div');
       node.classList.add('section');
@@ -122,7 +132,7 @@ class Sidebar {
 
       const top = document.createElement('div');
       top.classList.add('top');
-      top.style.borderLeft = `4px solid ` + colorMap[category];
+      top.style.borderLeft = `4px solid ` + colorMap[id];
       top.onclick = () => {
          if (!mobileActive()) {
             [...document.querySelectorAll('.bottom')]
@@ -140,7 +150,7 @@ class Sidebar {
       top.innerHTML = `
       <div class="top-inner">
       <div>
-      <div>${Pill(category)}</div>
+      <div>${Pill(classification, id)}</div>
       <div class="small">${countries.length} ${
          countries.length > 1 ? 'countries' : 'country'
       }</div>

@@ -1,13 +1,10 @@
 import hexToRgba from './hexToRgba.js';
 import { colorMap } from '../config.js';
 
-export function createObjectStyle(classification, state = 'normal') {
+export function createObjectStyle(classification, id, state = 'normal') {
    return {
-      fillColor: hexToRgba(
-         colorMap[classification],
-         state === 'normal' ? 0.1 : 0.2
-      ),
-      strokeColor: hexToRgba(colorMap[classification], 0.5),
+      fillColor: hexToRgba(colorMap[id], state === 'normal' ? 0.1 : 0.2),
+      strokeColor: hexToRgba(colorMap[id], 0.5),
       lineWidth: 2,
       zIndex: -1,
    };
@@ -18,8 +15,8 @@ async function constructMapPolygon(feature) {
       feature.geometry.type === 'MultiPolygon'
          ? constructMultiPolygon(feature)
          : constructPolygon(feature);
-   const { classification } = feature.properties;
-   const style = createObjectStyle(classification);
+   const { classification, classification_id: id } = feature.properties;
+   const style = createObjectStyle(classification, id);
    return new H.map.Polygon(geometry, { style });
 }
 

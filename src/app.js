@@ -28,15 +28,5 @@ const map = new Map(tooltip);
          map.addObject(country);
       });
 
-   const categories = {};
-   data.forEach((row) => {
-      const { classification, country, code } = row;
-      if (categories.hasOwnProperty(classification)) {
-         categories[classification].push({ country, code });
-      } else {
-         categories[classification] = [{ country, code }];
-      }
-   });
-
-   sidebar.setContent(categories);
+   sidebar.setContent(data);
 })();

@@ -27,18 +27,29 @@ class Tooltip {
       this.tooltip.style.display = 'none';
    }
 
-   setContent({ code, country, classification, description }) {
-      const content = `
+   setContent({
+      code,
+      country,
+      classification,
+      classification_id: id,
+      description,
+   }) {
+      this.tooltip.innerHTML = `
       <div class="title-row">
          <div class="title">${country}</div>
          ${Flag(code)}
       </div>
-      ${Pill(classification)}
+      ${Pill(classification, id)}
       <div class="description">${description} </div>`;
-      this.tooltip.innerHTML = content;
    }
 
-   setMobileContent({ code, country, classification, description }) {
+   setMobileContent({
+      code,
+      country,
+      classification,
+      classification_id: id,
+      description,
+   }) {
       this.mobileTooltip.innerHTML = `
       <div class="title-row">
          <div class="flex-align">
@@ -47,7 +58,7 @@ class Tooltip {
          </div>
          <img src="./static/close.svg" class="close-button">
       </div>
-      ${Pill(classification)}
+      ${Pill(classification, id)}
       <div class="description">${description} </div>`;
       document.querySelector('.close-button').onclick = () => this.hideMobile();
    }
