@@ -95,13 +95,18 @@ for (let i = 0; i < 3; i++) {
       addObjectToMap(country);
    });
 
-   document.querySelector('.loading-bar').style.opacity = 0;
-   document.querySelector('.loading-bar').style.visibility = 'hidden';
-
    populateSidebar(joined);
 })();
 
-function populateSidebar(data) {
+async function wait(duration = globalDelay) {
+   return new Promise((resolve) => {
+      setTimeout(() => {
+         resolve();
+      }, duration);
+   });
+}
+
+async function populateSidebar(data) {
    const classifications = [
       ...new Set(data.map((x) => x.properties.classification)),
    ];
@@ -121,9 +126,12 @@ function populateSidebar(data) {
          ];
       }
    });
-   console.log(categories);
 
+   await wait(500);
    document.querySelector('.sections').innerHTML = '';
+   document.querySelectorAll('.shine').forEach((node) => {
+      node.classList.remove('shine');
+   });
    Object.keys(categories).forEach((row) => {
       // console.log(row[categories]);
       const node = manufactureSection(row, categories[row]);
@@ -230,7 +238,7 @@ function manufactureSection(category, countries) {
       .map(
          (item, index) =>
             `<div style="position: absolute; transform: translateX(${
-               (numFlags - index) * 12
+               (numFlags - 1 - index) * 12
             }px);" class="cropper">
                <img src="${flag(item.code)}" />
             </div>`
