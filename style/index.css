@@ -99,13 +99,13 @@ html {
    padding: var(--spacing);
 }
 
-.sections-container {
+.sections {
    position: relative;
    height: auto;
 }
 
-.sections,
-.second-section {
+.section-left,
+.section-right {
    position: absolute;
    height: 100%;
    width: 100%;
@@ -114,7 +114,7 @@ html {
    transition: 0.3s all ease-out;
 }
 
-.second-section {
+.second-right {
    border-top: var(--border);
    /* background: green; */
    transform: translateX(100%);
@@ -128,7 +128,7 @@ html {
    margin-left: -5px;
 }
 
-.second-section-content {
+.section-right-content {
    flex: 1;
    overflow: auto;
 }

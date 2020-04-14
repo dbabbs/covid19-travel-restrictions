@@ -1,14 +1,5 @@
-import hexToRgba from './util/hexToRgba.js';
-import { colorMap } from './config.js';
-import flag from './util/flag.js';
-
-export const Pill = (classification) => {
-   let style = `background: ${hexToRgba(colorMap[classification], 0.2)};`;
-   style += `color: ${hexToRgba(colorMap[classification], 1)};`;
-   return `<div class="pill" style="${style}">
-      ${classification}
-   </div>`;
-};
+import Flag from './Flag.js';
+import Pill from './Pill.js';
 
 class Tooltip {
    constructor() {
@@ -40,9 +31,7 @@ class Tooltip {
       const content = `
       <div class="title-row">
          <div class="title">${country}</div>
-         <div class="cropper flag">
-            <img src="${flag(code)}"/>
-         </div>
+         ${Flag(code)}
       </div>
       ${Pill(classification)}
       <div class="description">${description} </div>`;
@@ -50,19 +39,16 @@ class Tooltip {
    }
 
    setMobileContent({ code, country, classification, description }) {
-      const content = `
+      this.mobileTooltip.innerHTML = `
       <div class="title-row">
          <div class="flex-align">
-            <div class="cropper flag" style="margin-right: 5px">
-               <img src="${flag(code)}"/>
-            </div>
+            ${Flag(code)}
             <div class="title">${country}</div>
          </div>
          <img src="./static/close.svg" class="close-button">
       </div>
       ${Pill(classification)}
       <div class="description">${description} </div>`;
-      this.mobileTooltip.innerHTML = content;
       document.querySelector('.close-button').onclick = () => this.hideMobile();
    }
 }
