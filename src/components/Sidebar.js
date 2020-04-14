@@ -49,7 +49,7 @@ class Sidebar {
          this.calculateHeights();
       }
       // calculateHeights();
-      window.onresize = () => calculateHeights();
+      window.onresize = () => this.calculateHeights();
    }
 
    setRightSectionContent(countries) {
