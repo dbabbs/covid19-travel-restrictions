@@ -9,9 +9,11 @@ import {
    minZoom,
    maxZoom,
    colorMap,
+   mobileWidth,
 } from './config.js';
 import { fetchCountryData, fetchCountryBoundaries } from './fetchData.js';
 import hexToRgba from './util/hexToRgba.js';
+import flag from './util/flag.js';
 
 const tooltip = new Tooltip();
 const platform = new H.service.Platform({ apikey: credentials.apikey });
@@ -38,21 +40,35 @@ async function addObjectToMap(feature) {
    const object = await constructMapPolygon(feature);
    const { classification } = feature.properties;
    object.addEventListener('pointerenter', (evt) => {
-      const { clientX: x, clientY: y } = evt.originalEvent;
-      tooltip.show();
-      tooltip.position({ x, y });
-      tooltip.setContent(feature.properties);
+      if (window.innerWidth > mobileWidth) {
+         const { clientX: x, clientY: y } = evt.originalEvent;
+         tooltip.show();
+         tooltip.position({ x, y });
+         tooltip.setContent(feature.properties);
+      }
+
       // object.setStyle(createObjectStyle(classification, 'hover'));
    });
 
    object.addEventListener('pointermove', (evt) => {
-      const { clientX: x, clientY: y } = evt.originalEvent;
-      tooltip.position({ x, y });
+      if (window.innerWidth > mobileWidth) {
+         const { clientX: x, clientY: y } = evt.originalEvent;
+         tooltip.position({ x, y });
+      }
    });
 
    object.addEventListener('pointerleave', () => {
-      tooltip.hide();
-      // object.setStyle(createObjectStyle(classification, 'normal'));
+      if (window.innerWidth > mobileWidth) {
+         tooltip.hide();
+      }
+   });
+
+   //For mobile
+   object.addEventListener('tap', (evt) => {
+      if (window.innerWidth <= mobileWidth) {
+         tooltip.showMobile();
+         tooltip.setMobileContent(feature.properties);
+      }
    });
 
    map.addObject(object);
@@ -113,19 +129,50 @@ function populateSidebar(data) {
       const node = manufactureSection(row, categories[row]);
       document.querySelector('.sections').appendChild(node);
    });
+
+   //set heights
+
+   calculateHeights();
+   window.onresize = () => calculateHeights();
+}
+
+function calculateHeights() {
+   const height = document.querySelector('.sections').offsetHeight;
+   const sectionHeightSum = [...document.querySelectorAll('.section')]
+      .map((x) => x.offsetHeight)
+      .reduce((curr, total) => curr + total);
+   console.log(sectionHeightSum);
+
+   const bottoms = document.querySelectorAll('.bottom');
+   bottoms.forEach((b) => {
+      b.style.height = height - sectionHeightSum;
+      console.log(b.style.height);
+   });
 }
 function manufactureSection(category, countries) {
    if (category === undefined && countries === undefined) {
       console.log('shimmer time');
       const node = document.createElement('div');
       node.classList.add('section');
+      node.style.borderRight = `4px solid transparent`;
       node.innerHTML = `
       <div class="top top-inner">
          <div>
             <div style="width: 200px" class="shine">adfasdfa</div>
             <div style="width: 100px" class="small shine">asdfadsf</div>
          </div>
-         <div class="flag-section"></div>
+         <div class="flag-section">
+            <div style="position: absolute; transform: translateX(24px);" class="shine cropper">
+               <div class="shine-img"></div>
+            </div>
+            <div style="position: absolute; transform: translateX(12px);" class="shine cropper">
+               <div class="shine-img"></div>
+            </div>
+            <div style="position: absolute;" class="shine cropper">
+               <div class="shine-img"></div>
+            </div>
+   
+         </div>
       </div>`;
       return node;
    }
@@ -138,7 +185,7 @@ function manufactureSection(category, countries) {
    const bottom = document.createElement('div');
    bottom.classList.add('bottom');
    bottom.style.maxHeight = '0px';
-   bottom.innerHTML = `<div style="background: rgb(220, 220, 220); width: 100%; height: 1px"></div>`;
+   // bottom.innerHTML = `<div style="background: rgb(220, 220, 220); width: 100%; height: 1px"></div>`;
    bottom.innerHTML += countries
       .sort((a, b) => a.name.localeCompare(b.name))
       .map(
@@ -148,7 +195,7 @@ function manufactureSection(category, countries) {
             }">
                ${item.name}
                <div class="cropper">
-                  <img src="https://restcountries.eu/data/${item.code.toLowerCase()}.svg" />
+                  <img src="${flag(item.code)}" />
                </div>
             </div>`
       )
@@ -166,7 +213,7 @@ function manufactureSection(category, countries) {
    top.onclick = () => {
       const curr = bottom.style.maxHeight;
       console.log(curr);
-      bottom.style.maxHeight = curr === '0px' ? '1500px' : 0;
+      bottom.style.maxHeight = curr === '0px' ? '500px' : 0;
    };
    top.innerHTML = `
    <div class="top-inner">
@@ -185,7 +232,7 @@ function manufactureSection(category, countries) {
             `<div style="position: absolute; transform: translateX(${
                (numFlags - index) * 12
             }px);" class="cropper">
-               <img src="https://restcountries.eu/data/${item.code.toLowerCase()}.svg" />
+               <img src="${flag(item.code)}" />
             </div>`
       )
       .join('')}

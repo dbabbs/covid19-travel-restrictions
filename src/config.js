@@ -26,37 +26,19 @@ const center = {
    lat: 40,
    lng: -0,
 };
-const zoom = 2;
-const minZoom = 2;
+const zoom = 1;
+const minZoom = 1;
 const maxZoom = 4;
 
-const schengen = [
-   'Austria',
-   'Hungary',
-   'Norway',
-   'Belgium',
-   'Iceland',
-   'Poland',
-   'Czech Republic',
-   'Italy',
-   'Portugal',
-   'Denmark',
-   'Latvia',
-   'Slovakia',
-   'Estonia',
-   'Liechtenstein',
-   'Slovenia',
-   'Finland',
-   'Lithuania',
-   'Spain',
-   'France',
-   'Luxembourg',
-   'Sweden',
-   'Germany',
-   'Malta',
-   'Switzerland',
-   'Greece',
-   'Netherlands',
-];
+const mobileWidth = 420;
 
-export { colors, credentials, center, zoom, minZoom, maxZoom, colorMap };
+export {
+   colors,
+   credentials,
+   center,
+   zoom,
+   minZoom,
+   maxZoom,
+   colorMap,
+   mobileWidth,
+};

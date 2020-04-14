@@ -1,0 +1,48 @@
+.tooltip {
+   position: absolute;
+   padding: var(--spacing);
+   z-index: 50000;
+   background: white;
+   border-radius: 2px;
+   box-shadow: 0px 0px 5px rgb(200, 200, 200);
+}
+
+.desktop-tooltip {
+   width: 180px;
+   display: none;
+}
+
+.mobile-tooltip {
+   width: calc(100vw - var(--spacing) * 2);
+   top: var(--spacing);
+   left: var(--spacing);
+   box-sizing: border-box;
+   /* height: 50px; */
+   transform: translateY(-140%);
+   transition: 0.3s all;
+}
+
+.tooltip > div {
+   margin-bottom: 5px;
+}
+.tooltip > div:last-child {
+   margin-bottom: 0;
+}
+.tooltip .title-row {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.tooltip .title {
+   font-size: 18px;
+   font-weight: 500;
+}
+
+.tooltip .flag {
+   height: 20px;
+}
+.tooltip .description {
+   font-size: 13px;
+   color: rgb(150, 150, 150);
+}
