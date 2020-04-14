@@ -9,7 +9,7 @@ import {
    minZoom,
    maxZoom,
    colorMap,
-   mobileWidth,
+   mobileActive,
 } from './config.js';
 import { fetchCountryData, fetchCountryBoundaries } from './fetchData.js';
 import hexToRgba from './util/hexToRgba.js';
@@ -40,7 +40,7 @@ async function addObjectToMap(feature) {
    const object = await constructMapPolygon(feature);
    const { classification } = feature.properties;
    object.addEventListener('pointerenter', (evt) => {
-      if (window.innerWidth > mobileWidth) {
+      if (!mobileActive()) {
          const { clientX: x, clientY: y } = evt.originalEvent;
          tooltip.show();
          tooltip.position({ x, y });
@@ -51,21 +51,21 @@ async function addObjectToMap(feature) {
    });
 
    object.addEventListener('pointermove', (evt) => {
-      if (window.innerWidth > mobileWidth) {
+      if (!mobileActive()) {
          const { clientX: x, clientY: y } = evt.originalEvent;
          tooltip.position({ x, y });
       }
    });
 
    object.addEventListener('pointerleave', () => {
-      if (window.innerWidth > mobileWidth) {
+      if (!mobileActive()) {
          tooltip.hide();
       }
    });
 
    //For mobile
-   object.addEventListener('tap', (evt) => {
-      if (window.innerWidth <= mobileWidth) {
+   object.addEventListener('tap', () => {
+      if (mobileActive()) {
          tooltip.showMobile();
          tooltip.setMobileContent(feature.properties);
       }
@@ -77,7 +77,7 @@ for (let i = 0; i < 3; i++) {
    document.querySelector('.sections').appendChild(manufactureSection());
 }
 (async () => {
-   if (window.innerWidth <= mobileWidth) {
+   if (mobileActive()) {
       calculateHeights();
    }
    const data = await fetchCountryData();
@@ -142,7 +142,7 @@ async function populateSidebar(data) {
    });
 
    //set heights
-   if (window.innerWidth > mobileWidth) {
+   if (!mobileActive()) {
       calculateHeights();
    }
    // calculateHeights();
@@ -167,6 +167,19 @@ function calculateHeights() {
    ).style.height = sectionHeightSum;
    console.log(sectionHeightSum);
    console.log(document.querySelector('.sections-container').style.height);
+}
+
+document.querySelector('.back-button').onclick = () => setBack();
+function setBack() {
+   document.querySelector(
+      '.second-section'
+   ).style.transform = `translateX(100%)`;
+   document.querySelector('.sections').style.transform = `translateX(0)`;
+}
+
+function setForward() {
+   document.querySelector('.second-section').style.transform = `translateX(0)`;
+   document.querySelector('.sections').style.transform = `translateX(-100%)`;
 }
 function manufactureSection(category, countries) {
    if (category === undefined && countries === undefined) {
@@ -226,28 +239,15 @@ function manufactureSection(category, countries) {
    top.classList.add('top');
    top.style.borderLeft = `4px solid ` + colorMap[category];
    top.onclick = () => {
-      if (window.innerWidth > mobileWidth) {
+      if (!mobileActive()) {
          console.log('hit here...');
          const curr = bottom.style.maxHeight;
          console.log(curr);
          bottom.style.maxHeight = curr === '0px' ? '500px' : 0;
       } else {
          console.log('clicking');
-         document.querySelector('.second-section').innerHTML = ``;
 
-         const backButton = document.createElement('div');
-         backButton.innerText = 'Back';
-         backButton.onclick = () => {
-            console.log('clicked');
-            document.querySelector(
-               '.second-section'
-            ).style.transform = `translateX(100%)`;
-            document.querySelector(
-               '.sections'
-            ).style.transform = `translateX(0)`;
-         };
-         document.querySelector('.second-section').appendChild(backButton);
-
+         document.querySelector('.second-section-content').innerHTML = ``;
          countries
             .sort((a, b) => a.name.localeCompare(b.name))
             .forEach((country) => {
@@ -259,15 +259,12 @@ function manufactureSection(category, countries) {
                   <img src="${flag(country.code)}" />
                </div>
             `;
-               document.querySelector('.second-section').appendChild(node);
+               document
+                  .querySelector('.second-section-content')
+                  .appendChild(node);
             });
 
-         document.querySelector(
-            '.second-section'
-         ).style.transform = `translateX(0)`;
-         document.querySelector(
-            '.sections'
-         ).style.transform = `translateX(-100%)`;
+         setForward();
       }
    };
    top.innerHTML = `

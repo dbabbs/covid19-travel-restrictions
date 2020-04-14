@@ -11,9 +11,8 @@ const colors = {
 
 const colorMap = {
    'Borders closed': colors.red,
-   'Borders open': colors.pink,
    'Flights suspended': colors.teal,
-   'Borders closed to most': colors.purple,
+   'Restricted access': colors.purple,
 };
 
 const credentials = {
@@ -30,7 +29,10 @@ const zoom = 1;
 const minZoom = 1;
 const maxZoom = 4;
 
-const mobileWidth = 420;
+function mobileActive() {
+   const mobileWidth = 420;
+   return window.innerWidth <= mobileWidth;
+}
 
 export {
    colors,
@@ -40,5 +42,5 @@ export {
    minZoom,
    maxZoom,
    colorMap,
-   mobileWidth,
+   mobileActive,
 };

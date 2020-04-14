@@ -120,6 +120,16 @@ html {
    transform: translateX(100%);
    padding: var(--spacing);
    box-sizing: border-box;
+   display: flex;
+   flex-direction: column;
+}
+
+.back-button img {
+   margin-left: -5px;
+}
+
+.second-section-content {
+   flex: 1;
    overflow: auto;
 }
 
