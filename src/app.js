@@ -229,8 +229,9 @@ function manufactureSection(category, countries) {
 </div>
 <div class="flag-section">
    ${countries
+      .sort((a, b) => a.name.localeCompare(b.name))
       .slice(0, numFlags)
-      .sort((a, b) => b.name - a.name)
+      .reverse()
       .map(
          (item, index) =>
             `<div style="position: absolute; transform: translateX(${
