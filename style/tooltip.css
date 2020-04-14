@@ -18,7 +18,7 @@
    left: var(--spacing);
    box-sizing: border-box;
    /* height: 50px; */
-   transform: translateY(-140%);
+   transform: translateY(-150%);
    transition: 0.3s all;
 }
 

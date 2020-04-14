@@ -20,7 +20,7 @@ class Tooltip {
       this.mobileTooltip.style.transform = `translateY(0)`;
    }
    hideMobile() {
-      this.mobileTooltip.style.transform = `translateY(-140%)`;
+      this.mobileTooltip.style.transform = `translateY(-150%)`;
    }
 
    show() {

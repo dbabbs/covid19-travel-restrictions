@@ -275,3 +275,38 @@ p {
    display: flex;
    align-items: center;
 }
+
+.loading-bar {
+   height: 5px;
+   width: 100vw;
+   background: #80e4e1;
+   background-image: linear-gradient(
+      to right,
+      #80e4e1 0%,
+      #81abf8 20%,
+      #80e4e1 40%,
+      #80e4e1 100%
+   );
+   background-repeat: no-repeat;
+   background-size: 800px 104px;
+   /* display: inline-block; */
+   position: relative;
+   color: transparent !important;
+
+   animation-duration: 0.7s;
+   animation-fill-mode: forwards;
+   animation-iteration-count: infinite;
+   animation-name: flow;
+   animation-timing-function: linear;
+   transition: 0.3s all;
+}
+
+@keyframes flow {
+   0% {
+      background-position: -468px 0;
+   }
+
+   100% {
+      background-position: 468px 0;
+   }
+}

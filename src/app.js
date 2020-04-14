@@ -95,8 +95,8 @@ for (let i = 0; i < 3; i++) {
       addObjectToMap(country);
    });
 
-   document.querySelector('.loading-container').style.opacity = 0;
-   document.querySelector('.loading-container').style.visibility = 'hidden';
+   document.querySelector('.loading-bar').style.opacity = 0;
+   document.querySelector('.loading-bar').style.visibility = 'hidden';
 
    populateSidebar(joined);
 })();
