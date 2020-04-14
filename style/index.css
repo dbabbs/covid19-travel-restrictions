@@ -52,137 +52,6 @@ html {
    width: 100%;
 }
 
-.loading-container {
-   display: flex;
-   z-index: 50000;
-   align-items: center;
-   justify-content: center;
-   pointer-events: none;
-   visibility: visible;
-   opacity: 1;
-   transition: 0.3s all;
-}
-
-.loading-container img {
-   height: 40px;
-   width: 40px;
-   background: white;
-   border-radius: 3px;
-   padding: 5px;
-   box-shadow: 0px 0px 5px rgb(200, 200, 200);
-}
-
-.sidebar {
-   width: 330px;
-   /* padding: var(--spacing); */
-   z-index: 50000;
-   background: white;
-   border-radius: 2px;
-   box-shadow: 0px 0px 5px rgb(200, 200, 200);
-   /* overflow-y: scroll; */
-   display: flex;
-   flex-direction: column;
-}
-
-.sidebar h1 {
-   font-size: 24px;
-   margin-top: 0;
-   display: inline-block;
-}
-
-.sidebar p {
-   color: var(--gray);
-   margin: 0;
-}
-
-.sidebar .padding {
-   padding: var(--spacing);
-}
-
-.sections {
-   position: relative;
-   height: auto;
-}
-
-.section-left,
-.section-right {
-   position: absolute;
-   height: 100%;
-   width: 100%;
-   top: 0;
-   left: 0;
-   transition: 0.3s all ease-out;
-}
-
-.second-right {
-   border-top: var(--border);
-   /* background: green; */
-   transform: translateX(100%);
-   padding: var(--spacing);
-   box-sizing: border-box;
-   display: flex;
-   flex-direction: column;
-}
-
-.back-button img {
-   margin-left: -5px;
-}
-
-.section-right-content {
-   flex: 1;
-   overflow: auto;
-}
-
-.sections {
-   transform: translateX(0);
-   height: 100%;
-}
-.sidebar .section {
-   border-top: var(--border);
-
-   transition: 0.2s all;
-   cursor: pointer;
-   font-weight: 500;
-   overflow: hidden;
-   /* text-transform: uppercase; */
-}
-
-.section .top {
-   padding: var(--spacing);
-   user-select: none;
-}
-
-.section .top:hover {
-   background: rgba(245, 245, 245);
-}
-
-.bottom {
-   padding: 0 var(--spacing);
-   /* padding-bottom: calc(var(--spacing) - 5px); */
-   /* display: none; */
-   max-height: 0px;
-   /* height: calc(562.92px - 69px * 3); */
-   /* max-height: 1500px; */
-   transition: 0.3s all;
-   overflow-y: auto;
-}
-
-.top-inner {
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-}
-
-.sidebar .section:last-child {
-   border-bottom: var(--border);
-}
-
-.section .small {
-   margin-top: 5px;
-   color: var(--gray);
-   font-size: 14px;
-}
-
 .flag-section {
    position: relative;
    height: 20px;
@@ -298,7 +167,7 @@ html {
 }
 
 @media screen and (min-width: 419px) {
-   .second-section {
+   .right-section {
       display: none;
       border-top: none !important;
    }

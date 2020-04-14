@@ -1,5 +1,5 @@
-import hexToRgba from './util/hexToRgba.js';
-import { colorMap } from './config.js';
+import hexToRgba from './hexToRgba.js';
+import { colorMap } from '../config.js';
 
 export function createObjectStyle(classification, state = 'normal') {
    return {

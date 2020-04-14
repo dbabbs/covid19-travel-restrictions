@@ -1,9 +1,8 @@
-import { credentials } from './config.js';
+import { credentials } from '../config.js';
 async function fetchCountryData() {
    const url = `https://spreadsheets.google.com/feeds/cells/1ayVxennSpqejr3aytsQLn4b0tyOEW6wmGsOdhjPr3yA/1/public/full?alt=json`;
    const data = await fetch(url).then((res) => res.json());
    const numCols = 7;
-   console.log(data);
    const columns = data.feed.entry.slice(0, numCols).map((x) => x.content.$t);
    const tableCells = data.feed.entry.slice(numCols, data.feed.entry.length);
    const output = [];

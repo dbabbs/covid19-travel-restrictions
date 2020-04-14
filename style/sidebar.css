@@ -1,0 +1,101 @@
+.sidebar {
+   width: 330px;
+   z-index: 50000;
+   background: white;
+   border-radius: 2px;
+   box-shadow: 0px 0px 5px rgb(200, 200, 200);
+   display: flex;
+   flex-direction: column;
+}
+
+.sidebar h1 {
+   font-size: 24px;
+   margin-top: 0;
+   display: inline-block;
+}
+
+.sidebar p {
+   color: var(--gray);
+   margin: 0;
+}
+
+.sidebar .padding {
+   padding: var(--spacing);
+}
+
+.sections {
+   position: relative;
+   height: 100%;
+}
+
+.left-section,
+.right-section {
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   top: 0;
+   left: 0;
+   transition: 0.3s all ease-out;
+}
+
+.right-section {
+   border-top: var(--border);
+   transform: translateX(100%);
+   padding: var(--spacing);
+   box-sizing: border-box;
+   display: flex;
+   flex-direction: column;
+}
+
+.right-section-content {
+   flex: 1;
+   overflow: auto;
+}
+
+.back-button {
+   margin: 5px 0;
+}
+
+.back-button img {
+   margin-left: -5px;
+}
+
+.section {
+   border-top: var(--border);
+   transition: 0.2s all;
+   cursor: pointer;
+   font-weight: 500;
+   overflow: hidden;
+}
+
+.section .top {
+   padding: var(--spacing);
+   user-select: none;
+}
+
+.section .top:hover {
+   background: rgba(245, 245, 245);
+}
+
+.bottom {
+   padding: 0 var(--spacing);
+   max-height: 0px;
+   transition: 0.3s all;
+   overflow-y: auto;
+}
+
+.top-inner {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.sidebar .section:last-child {
+   border-bottom: var(--border);
+}
+
+.section .small {
+   margin-top: 5px;
+   color: var(--gray);
+   font-size: 14px;
+}

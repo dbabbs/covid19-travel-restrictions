@@ -1,11 +1,17 @@
-import Pill from './components/Pill.js';
-import { mobileActive, colorMap } from './config.js';
-import wait from './util/wait.js';
-import Flag from './components/Flag.js';
+import Pill from './Pill.js';
+import { mobileActive, colorMap } from '../config.js';
+import wait from '../util/wait.js';
+import Flag from './Flag.js';
+import purgeChildren from '../util/purgeChildren.js';
 class Sidebar {
    constructor() {
       this.mobileBackButton = document.querySelector('.back-button');
-
+      this.container = document.querySelector('.sections');
+      this.leftSection = document.querySelector('.left-section');
+      this.rightSection = document.querySelector('.right-section');
+      this.rightSectionContent = document.querySelector(
+         '.right-section-content'
+      );
       this.mobileBackButton.onclick = () => this.setBack();
 
       this.addShines();
@@ -13,36 +19,29 @@ class Sidebar {
 
    addShines() {
       for (let i = 0; i < 3; i++) {
-         document
-            .querySelector('.sections')
-            .appendChild(this.manufactureShineSection());
+         this.leftSection.appendChild(this.manufactureShineSection());
       }
    }
 
    setForward() {
-      document.querySelector(
-         '.section-left'
-      ).style.transform = `translateX(-100%)`;
-      document.querySelector('.second-right').style.transform = `translateX(0)`;
+      this.leftSection.style.transform = `translateX(-100%)`;
+      this.rightSection.style.transform = `translateX(0)`;
    }
 
    setBack() {
-      document.querySelector('.section-left').style.transform = `translateX(0)`;
-      document.querySelector(
-         '.section-right'
-      ).style.transform = `translateX(100%)`;
+      this.leftSection.style.transform = `translateX(0)`;
+      this.rightSection.style.transform = `translateX(100%)`;
    }
 
-   async set(categories) {
+   async setContent(categories) {
       await wait(500);
-      document.querySelector('.sections').innerHTML = '';
+      purgeChildren(this.leftSection);
       document.querySelectorAll('.shine').forEach((node) => {
          node.classList.remove('shine');
       });
-      Object.keys(categories).forEach((row) => {
-         // console.log(row[categories]);
-         const node = this.manufactureSection(row, categories[row]);
-         document.querySelector('.sections').appendChild(node);
+      Object.keys(categories).forEach((row, index) => {
+         const node = this.manufactureSection(row, categories[row], index);
+         this.leftSection.appendChild(node);
       });
 
       //set heights
@@ -51,6 +50,21 @@ class Sidebar {
       }
       // calculateHeights();
       window.onresize = () => calculateHeights();
+   }
+
+   setRightSectionContent(countries) {
+      purgeChildren(this.rightSectionContent);
+      countries
+         .sort((a, b) => a.country.localeCompare(b.country))
+         .forEach((country) => {
+            const node = document.createElement('div');
+            node.classList.add('country-row');
+            node.innerHTML = `
+                  ${country.country}
+                  ${Flag(country.code)}
+               `;
+            this.rightSectionContent.appendChild(node);
+         });
    }
 
    manufactureShineSection() {
@@ -83,28 +97,23 @@ class Sidebar {
       return node;
    }
 
-   manufactureSection(category, countries) {
-      if (category === undefined && countries === undefined) {
-         console.log('shimmer time');
-      }
+   manufactureSection(category, countries, index) {
       const numFlags = 3;
       const node = document.createElement('div');
       node.classList.add('section');
-
-      // node.style.marginLeft = '3px';
 
       const bottom = document.createElement('div');
       bottom.classList.add('bottom');
       bottom.style.maxHeight = '0px';
       // bottom.innerHTML = `<div style="background: rgb(220, 220, 220); width: 100%; height: 1px"></div>`;
       bottom.innerHTML += countries
-         .sort((a, b) => a.name.localeCompare(b.name))
+         .sort((a, b) => a.country.localeCompare(b.country))
          .map(
             (item, index) =>
                `<div class="country-row" style="${
                   index === 0 && `padding-top: 10px`
                }">
-                  ${item.name}
+                  ${item.country}
                   ${Flag(item.code)}
                   
                </div>`
@@ -116,29 +125,16 @@ class Sidebar {
       top.style.borderLeft = `4px solid ` + colorMap[category];
       top.onclick = () => {
          if (!mobileActive()) {
-            console.log('hit here...');
+            [...document.querySelectorAll('.bottom')]
+               .filter((x, i) => i !== index)
+               .forEach((b) => {
+                  b.style.maxHeight = '0px';
+               });
             const curr = bottom.style.maxHeight;
-            console.log(curr);
             bottom.style.maxHeight = curr === '0px' ? '500px' : 0;
          } else {
-            console.log('clicking');
-
-            document.querySelector('.second-section-content').innerHTML = ``;
-            countries
-               .sort((a, b) => a.name.localeCompare(b.name))
-               .forEach((country) => {
-                  const node = document.createElement('div');
-                  node.classList.add('country-row');
-                  node.innerHTML = `
-                  ${country.name}
-                  ${Flag(country.code)}
-               `;
-                  document
-                     .querySelector('.second-section-content')
-                     .appendChild(node);
-               });
-
-            setForward();
+            this.setRightSectionContent(countries);
+            this.setForward();
          }
       };
       top.innerHTML = `
@@ -151,7 +147,7 @@ class Sidebar {
    </div>
    <div class="flag-section">
       ${countries
-         .sort((a, b) => a.name.localeCompare(b.name))
+         .sort((a, b) => a.country.localeCompare(b.country))
          .slice(0, numFlags)
          .reverse()
          .map((item, index) =>
@@ -165,26 +161,22 @@ class Sidebar {
       </div>
       `;
       node.appendChild(top);
-
       node.appendChild(bottom);
-
       return node;
    }
 
    calculateHeights() {
-      const height = document.querySelector('.sections').offsetHeight;
+      const height = this.container.offsetHeight;
       const sectionHeightSum = [...document.querySelectorAll('.section')]
          .map((x) => x.offsetHeight)
          .reduce((curr, total) => curr + total);
-      console.log(sectionHeightSum);
 
       const bottoms = document.querySelectorAll('.bottom');
       bottoms.forEach((b) => {
          b.style.height = height - sectionHeightSum;
-         console.log(b.style.height);
       });
 
-      document.querySelector('.sections').style.height = sectionHeightSum;
+      this.container.style.height = sectionHeightSum;
    }
 }
 
