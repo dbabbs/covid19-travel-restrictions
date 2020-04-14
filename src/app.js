@@ -1,7 +1,7 @@
 import constructMapPolygon, {
    createObjectStyle,
 } from './constructMapPolygon.js';
-import Tooltip from './Tooltip.js';
+import Tooltip, { Pill } from './Tooltip.js';
 import {
    credentials,
    center,
@@ -162,11 +162,13 @@ function manufactureSection(category, countries) {
       console.log('shimmer time');
       const node = document.createElement('div');
       node.classList.add('section');
-      node.style.borderRight = `4px solid transparent`;
+      node.style.borderLeft = `4px solid transparent`;
       node.innerHTML = `
       <div class="top top-inner">
          <div>
-            <div style="width: 200px" class="shine">adfasdfa</div>
+            <div style="width: 200px" class="shine">${Pill(
+               'Borders closed'
+            )}</div>
             <div style="width: 100px" class="small shine">asdfadsf</div>
          </div>
          <div class="flag-section">
@@ -210,14 +212,8 @@ function manufactureSection(category, countries) {
       .join('');
 
    const top = document.createElement('div');
-   top.onmouseenter = () => {
-      top.style.background = hexToRgba(colorMap[category], 0.08);
-   };
-   top.onmouseleave = () => {
-      top.style.background = '';
-   };
    top.classList.add('top');
-   top.style.borderRight = `4px solid ` + colorMap[category];
+   top.style.borderLeft = `4px solid ` + colorMap[category];
    top.onclick = () => {
       const curr = bottom.style.maxHeight;
       console.log(curr);
@@ -226,7 +222,7 @@ function manufactureSection(category, countries) {
    top.innerHTML = `
    <div class="top-inner">
    <div>
-   <div>${category}</div>
+   <div>${Pill(category)}</div>
    <div class="small">${countries.length} ${
       countries.length > 1 ? 'countries' : 'country'
    }</div>

@@ -117,6 +117,10 @@ html {
    user-select: none;
 }
 
+.section .top:hover {
+   background: rgba(245, 245, 245);
+}
+
 .bottom {
    padding: 0 var(--spacing);
    /* padding-bottom: calc(var(--spacing) - 5px); */
@@ -220,6 +224,10 @@ html {
    animation-iteration-count: infinite;
    animation-name: placeholderShimmer;
    animation-timing-function: linear;
+}
+
+.shine div {
+   visibility: hidden;
 }
 
 @keyframes placeholderShimmer {
