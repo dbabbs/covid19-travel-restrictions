@@ -262,3 +262,26 @@ html {
       background-position: 468px 0;
    }
 }
+
+/** Mobile
+**/
+@media screen and (max-width: 411px) {
+   html,
+   body {
+      flex-direction: column-reverse;
+   }
+
+   .map-container {
+      height: 50%;
+      width: 100%;
+      /* flex: 1; */
+      position: relative;
+   }
+   .sidebar {
+      width: 100%;
+      /* height: 50%; */
+   }
+   p {
+      margin-bottom: 0;
+   }
+}
