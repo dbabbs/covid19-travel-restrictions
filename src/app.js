@@ -77,6 +77,9 @@ for (let i = 0; i < 3; i++) {
    document.querySelector('.sections').appendChild(manufactureSection());
 }
 (async () => {
+   if (window.innerWidth <= mobileWidth) {
+      calculateHeights();
+   }
    const data = await fetchCountryData();
    const codes = data.map((x) => x.code);
    console.log(new Set(data.map((x) => x.classification)));
@@ -139,8 +142,10 @@ async function populateSidebar(data) {
    });
 
    //set heights
-
-   calculateHeights();
+   if (window.innerWidth > mobileWidth) {
+      calculateHeights();
+   }
+   // calculateHeights();
    window.onresize = () => calculateHeights();
 }
 
@@ -156,6 +161,12 @@ function calculateHeights() {
       b.style.height = height - sectionHeightSum;
       console.log(b.style.height);
    });
+
+   document.querySelector(
+      '.sections-container'
+   ).style.height = sectionHeightSum;
+   console.log(sectionHeightSum);
+   console.log(document.querySelector('.sections-container').style.height);
 }
 function manufactureSection(category, countries) {
    if (category === undefined && countries === undefined) {
@@ -215,9 +226,49 @@ function manufactureSection(category, countries) {
    top.classList.add('top');
    top.style.borderLeft = `4px solid ` + colorMap[category];
    top.onclick = () => {
-      const curr = bottom.style.maxHeight;
-      console.log(curr);
-      bottom.style.maxHeight = curr === '0px' ? '500px' : 0;
+      if (window.innerWidth > mobileWidth) {
+         console.log('hit here...');
+         const curr = bottom.style.maxHeight;
+         console.log(curr);
+         bottom.style.maxHeight = curr === '0px' ? '500px' : 0;
+      } else {
+         console.log('clicking');
+         document.querySelector('.second-section').innerHTML = ``;
+
+         const backButton = document.createElement('div');
+         backButton.innerText = 'Back';
+         backButton.onclick = () => {
+            console.log('clicked');
+            document.querySelector(
+               '.second-section'
+            ).style.transform = `translateX(100%)`;
+            document.querySelector(
+               '.sections'
+            ).style.transform = `translateX(0)`;
+         };
+         document.querySelector('.second-section').appendChild(backButton);
+
+         countries
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .forEach((country) => {
+               const node = document.createElement('div');
+               node.classList.add('country-row');
+               node.innerHTML = `
+               ${country.name}
+               <div class="cropper">
+                  <img src="${flag(country.code)}" />
+               </div>
+            `;
+               document.querySelector('.second-section').appendChild(node);
+            });
+
+         document.querySelector(
+            '.second-section'
+         ).style.transform = `translateX(0)`;
+         document.querySelector(
+            '.sections'
+         ).style.transform = `translateX(-100%)`;
+      }
    };
    top.innerHTML = `
    <div class="top-inner">
