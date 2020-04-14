@@ -1,4 +1,6 @@
-import constructMapPolygon from './constructMapPolygon.js';
+import constructMapPolygon, {
+   createObjectStyle,
+} from './constructMapPolygon.js';
 import Tooltip from './Tooltip.js';
 import {
    credentials,
@@ -34,12 +36,13 @@ defaultLayers.vector.normal.map.setMin(minZoom);
 
 async function addObjectToMap(feature) {
    const object = await constructMapPolygon(feature);
-
+   const { classification } = feature.properties;
    object.addEventListener('pointerenter', (evt) => {
       const { clientX: x, clientY: y } = evt.originalEvent;
       tooltip.show();
       tooltip.position({ x, y });
       tooltip.setContent(feature.properties);
+      // object.setStyle(createObjectStyle(classification, 'hover'));
    });
 
    object.addEventListener('pointermove', (evt) => {
@@ -49,6 +52,7 @@ async function addObjectToMap(feature) {
 
    object.addEventListener('pointerleave', () => {
       tooltip.hide();
+      // object.setStyle(createObjectStyle(classification, 'normal'));
    });
 
    map.addObject(object);
@@ -128,20 +132,20 @@ function manufactureSection(category, countries) {
    const numFlags = 3;
    const node = document.createElement('div');
    node.classList.add('section');
-   node.onmouseenter = () => {
-      node.style.background = hexToRgba(colorMap[category], 0.08);
-   };
-   node.onmouseleave = () => {
-      node.style.background = '';
-   };
+
    // node.style.marginLeft = '3px';
 
    const bottom = document.createElement('div');
    bottom.classList.add('bottom');
-   bottom.innerHTML = countries
+   bottom.style.maxHeight = '0px';
+   bottom.innerHTML = `<div style="background: rgb(220, 220, 220); width: 100%; height: 1px"></div>`;
+   bottom.innerHTML += countries
+      .sort((a, b) => a.name.localeCompare(b.name))
       .map(
-         (item) =>
-            `<div class="country-row">
+         (item, index) =>
+            `<div class="country-row" style="${
+               index === 0 && `padding-top: 10px`
+            }">
                ${item.name}
                <div class="cropper">
                   <img src="https://restcountries.eu/data/${item.code.toLowerCase()}.svg" />
@@ -151,11 +155,18 @@ function manufactureSection(category, countries) {
       .join('');
 
    const top = document.createElement('div');
+   top.onmouseenter = () => {
+      top.style.background = hexToRgba(colorMap[category], 0.08);
+   };
+   top.onmouseleave = () => {
+      top.style.background = '';
+   };
    top.classList.add('top');
    top.style.borderRight = `4px solid ` + colorMap[category];
    top.onclick = () => {
-      bottom.style.display =
-         bottom.style.display === 'block' ? 'none' : 'block';
+      const curr = bottom.style.maxHeight;
+      console.log(curr);
+      bottom.style.maxHeight = curr === '0px' ? '1500px' : 0;
    };
    top.innerHTML = `
    <div class="top-inner">

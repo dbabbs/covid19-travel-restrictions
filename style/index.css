@@ -34,6 +34,7 @@ html {
    display: flex;
    height: 100vh;
    width: 100vw;
+   font-size: 14px;
 }
 
 .map-container {
@@ -70,7 +71,7 @@ html {
    box-shadow: 0px 0px 5px rgb(200, 200, 200);
 }
 .sidebar {
-   width: 320px;
+   width: 330px;
    /* padding: var(--spacing); */
    z-index: 50000;
    background: white;
@@ -98,16 +99,23 @@ html {
    transition: 0.2s all;
    cursor: pointer;
    font-weight: 500;
+   overflow: hidden;
    /* text-transform: uppercase; */
 }
 
 .section .top {
    padding: var(--spacing);
+   user-select: none;
 }
 
 .bottom {
    padding: 0 var(--spacing);
-   display: none;
+   /* padding-bottom: calc(var(--spacing) - 5px); */
+   /* display: none; */
+   max-height: 0px;
+   height: auto;
+   /* max-height: 1500px; */
+   transition: 0.3s all;
 }
 
 .top-inner {
@@ -154,16 +162,17 @@ html {
    /* box-shadow: 0px 0px 2px white; */
 }
 
-.sidebar .section:hover {
-   background: rgb(250, 250, 250);
-}
-
 .country-row {
    display: flex;
    align-items: center;
    justify-content: space-between;
    padding: 5px 0;
    color: var(--gray);
+}
+
+.country-row:nth-child(1) {
+   padding-top: 10px;
+   background: green;
 }
 
 .tooltip {
