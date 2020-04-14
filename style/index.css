@@ -265,7 +265,7 @@ html {
 
 /** Mobile
 **/
-@media screen and (max-width: 411px) {
+@media screen and (max-width: 420px) {
    html,
    body {
       flex-direction: column-reverse;
