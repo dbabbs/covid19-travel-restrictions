@@ -23,7 +23,7 @@ class Map {
       window.addEventListener('resize', () => this.map.getViewPort().resize());
       new H.mapevents.Behavior(new H.mapevents.MapEvents(this.map));
       const provider = this.map.getBaseLayer().getProvider();
-      const style = new H.map.Style('../static/map-style.yaml');
+      const style = new H.map.Style('../static/map-style/scene.yaml');
       provider.setStyle(style);
 
       defaultLayers.vector.normal.map.setMax(maxZoom);

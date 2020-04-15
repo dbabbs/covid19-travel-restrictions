@@ -56,7 +56,7 @@ class Tooltip {
             ${Flag(code)}
             <div class="title">${country}</div>
          </div>
-         <img src="./static/close.svg" class="close-button">
+         <img src="./static/icons/close.svg" class="close-button">
       </div>
       ${Pill(classification, id)}
       <div class="description">${description} </div>`;

@@ -1,6 +1,6 @@
 function getUrl(code) {
    return code.toLowerCase() === 'schengen'
-      ? './static/schengen.png'
+      ? './static/flags/schengen.png'
       : `https://restcountries.eu/data/${code.toLowerCase()}.svg`;
 }
 
