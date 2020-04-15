@@ -53,11 +53,22 @@
 }
 
 .back-button {
-   margin: 5px 0;
+   /* margin: 5px 0; */
 }
 
 .back-button img {
    margin-left: -5px;
+}
+
+.title-row {
+   display: grid;
+   grid-template-columns: 20% 1fr 20%;
+}
+
+.title-row .center {
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 .section {
@@ -98,4 +109,18 @@
    margin-top: 5px;
    color: var(--gray);
    font-size: 14px;
+}
+
+.section-label {
+   color: var(--gray);
+   font-weight: normal;
+   margin-top: 5px;
+   /* width: 80%; */
+}
+
+.flag-section {
+   position: relative;
+   display: block;
+   height: 20px;
+   width: 46px !important;
 }

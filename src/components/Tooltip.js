@@ -54,7 +54,7 @@ class Tooltip {
       <div class="title-row">
          <div class="flex-align">
             ${Flag(code)}
-            <div class="title">${country}</div>
+            <div style="margin-left: 5px" class="title">${country}</div>
          </div>
          <img src="./static/icons/close.svg" class="close-button">
       </div>

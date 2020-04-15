@@ -60,6 +60,7 @@ class Sidebar {
    }
 
    setRightSectionContent(countries) {
+      console.log(countries);
       purgeChildren(this.rightSectionContent);
       countries
          .sort((a, b) => a.country.localeCompare(b.country))
@@ -72,6 +73,10 @@ class Sidebar {
                `;
             this.rightSectionContent.appendChild(node);
          });
+      document.querySelector('.title-row .center').innerHTML = Pill(
+         countries[0].classification,
+         countries[0].classification_id
+      );
    }
 
    manufactureShineSection() {
@@ -147,11 +152,14 @@ class Sidebar {
       };
       top.innerHTML = `
       <div class="top-inner">
-      <div>
+      <div style="flex: 1;">
       <div>${Pill(classification, id)}</div>
-      <div class="small">${countries.length} ${
+      <div style="flex: 1" class="small">${countries.length} ${
          countries.length > 1 ? 'countries' : 'country'
       }</div>
+      
+      
+      <div class="section-label">This is a description that means the person can or cannot enter and!</div>
    </div>
    <div class="flag-section">
       ${countries
