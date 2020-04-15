@@ -36,7 +36,6 @@ class Sidebar {
    }
 
    async setContent(data) {
-      console.log(data);
       const classifications = [...new Set(data.map((x) => x.classification))];
       await wait(500);
       purgeChildren(this.leftSection);
@@ -48,7 +47,6 @@ class Sidebar {
          const matches = data.filter(
             (x) => x.classification === classification
          );
-         console.log(matches);
          const node = this.manufactureSection(matches, index);
          this.leftSection.appendChild(node);
       });
