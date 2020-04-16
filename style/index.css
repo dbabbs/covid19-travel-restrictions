@@ -22,6 +22,10 @@
    font-weight: 500;
 }
 
+p {
+   line-height: 18px;
+}
+
 body,
 html {
    border: 0;
@@ -129,6 +133,10 @@ html {
    visibility: hidden;
 }
 
+.shine a {
+   color: transparent;
+}
+
 @keyframes placeholderShimmer {
    0% {
       background-position: -468px 0;
@@ -173,9 +181,12 @@ html {
 
 .H_logo {
    margin: 10px !important;
+   cursor: pointer;
+   pointer-events: visible;
 }
 
 .H_copyright {
+   display: none;
    font-family: FiraGO !important;
    color: var(--gray) !important;
    background: none !important;
@@ -191,4 +202,34 @@ html {
 .flex-align {
    display: flex;
    align-items: center;
+}
+
+.attribution {
+   display: flex;
+   position: absolute;
+   z-index: 50000;
+   bottom: 0;
+   right: 0;
+   padding: 10px;
+   /* display: none; */
+}
+
+.attribution a {
+   display: block;
+   margin-left: 10px;
+   background: rgba(255, 255, 255, 0.8);
+   padding: 4px;
+   font-weight: 500;
+   color: var(--gray);
+   transition: 0.3s all;
+   text-decoration: none;
+}
+.attribution a:hover {
+   color: rgb(100, 100, 100);
+}
+
+a {
+   color: rgb(100, 100, 100);
+   text-decoration: none;
+   font-weight: 500;
 }

@@ -30,6 +30,13 @@ class Map {
       defaultLayers.vector.normal.map.setMin(minZoom);
 
       this.tooltip = tooltip;
+
+      document.querySelector('.H_logo').onclick = () => {
+         window.open(
+            'https://developer.here.com/freemium?cid=Coronavirus-coronavirusmap-CM-0-Dev-&utm_source=coronavirusmap&utm_medium=referral&utm_campaign=Online_Coronavirus_Dev_2020',
+            '_blank'
+         );
+      };
    }
 
    async addObject(feature) {
