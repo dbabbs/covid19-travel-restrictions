@@ -1,5 +1,11 @@
-# TODO
+# Travel Restrictions during COVID-19
 
--  add webpack
--  horizontal gradient loading for map (here teal colors)
--  add copyright to map
+To run the project, set up a local server:
+
+```
+python -m SimpleHTTPServer 8888
+```
+
+and then visit [localhost:8888](//localhost:8888).
+
+Or visit the live map: [here-travel-restrictions.netlify.app/](http://here-travel-restrictions.netlify.app/)
