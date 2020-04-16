@@ -9,9 +9,6 @@ const sidebar = new Sidebar();
 const map = new Map(tooltip);
 
 (async () => {
-   if (mobileActive()) {
-      sidebar.calculateHeights();
-   }
    const data = await fetchCountryData();
    const codes = data.map((x) => x.code);
    const boundaries = await fetchCountryBoundaries(codes);

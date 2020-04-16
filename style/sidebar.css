@@ -26,6 +26,10 @@
 .sections {
    position: relative;
    height: 100%;
+   display: flex;
+   flex-direction: column;
+   overflow-x: hidden;
+   /* flex: 1; */
 }
 
 .left-section,
@@ -41,7 +45,7 @@
 .right-section {
    border-top: var(--border);
    transform: translateX(100%);
-   padding: var(--spacing);
+   padding: var(--spacing) var(--spacing) 0 var(--spacing);
    box-sizing: border-box;
    display: flex;
    flex-direction: column;
@@ -54,6 +58,7 @@
 
 .back-button {
    /* margin: 5px 0; */
+   cursor: pointer;
 }
 
 .back-button img {
@@ -77,22 +82,19 @@
    cursor: pointer;
    font-weight: 500;
    overflow: hidden;
-}
-
-.section .top {
    padding: var(--spacing);
    user-select: none;
+   box-sizing: border-box;
+   /* height: 100%; */
 }
 
-.section .top:hover {
+.section:hover {
    background: rgba(245, 245, 245);
 }
 
 .bottom {
    padding: 0 var(--spacing);
-   max-height: 0px;
    transition: 0.3s all;
-   overflow-y: auto;
 }
 
 .top-inner {

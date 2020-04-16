@@ -36,6 +36,10 @@ function mobileActive() {
    return window.innerWidth <= mobileWidth;
 }
 
+function embedActive() {
+   return !mobileActive() && window.innerHeight < 700;
+}
+
 export {
    colors,
    credentials,
@@ -46,4 +50,5 @@ export {
    colorMap,
    mobileActive,
    classificationLegends,
+   embedActive,
 };

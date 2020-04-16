@@ -157,25 +157,19 @@ html {
    }
 
    .map-container {
-      height: 50%;
+      /* height: 50%; */
       width: 100%;
-      /* flex: 1; */
+
       position: relative;
    }
    .sidebar {
       width: 100%;
-      /* height: 50%; */
+      height: auto;
+      flex: 1;
    }
 
    .section-label {
       display: none;
-   }
-}
-
-@media screen and (min-width: 419px) {
-   .right-section {
-      display: none;
-      border-top: none !important;
    }
 }
 

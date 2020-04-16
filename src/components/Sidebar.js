@@ -1,5 +1,10 @@
 import Pill from './Pill.js';
-import { mobileActive, colorMap, classificationLegends } from '../config.js';
+import {
+   mobileActive,
+   embedActive,
+   colorMap,
+   classificationLegends,
+} from '../config.js';
 import wait from '../util/wait.js';
 import Flag from './Flag.js';
 import purgeChildren from '../util/purgeChildren.js';
@@ -51,12 +56,22 @@ class Sidebar {
          this.leftSection.appendChild(node);
       });
 
-      //set heights
-      if (!mobileActive()) {
-         this.calculateHeights();
-      }
-      // calculateHeights();
+      this.calculateHeights();
       window.onresize = () => this.calculateHeights();
+   }
+
+   calculateHeights() {
+      console.log('resizing..');
+      if (mobileActive()) {
+         const sectionHeightTotals = [...document.querySelectorAll('.section')]
+            .map((x) => x.offsetHeight)
+            .reduce((x, y) => x + y);
+         console.log(sectionHeightTotals);
+
+         document.querySelector('.sections').style.height = sectionHeightTotals;
+      } else {
+         document.querySelector('.sections').style.height = '100%';
+      }
    }
 
    setRightSectionContent(countries) {
@@ -114,43 +129,12 @@ class Sidebar {
       const numFlags = 3;
       const node = document.createElement('div');
       node.classList.add('section');
-
-      const bottom = document.createElement('div');
-      bottom.classList.add('bottom');
-      bottom.style.maxHeight = '0px';
-      // bottom.innerHTML = `<div style="background: rgb(220, 220, 220); width: 100%; height: 1px"></div>`;
-      bottom.innerHTML += countries
-         .sort((a, b) => a.country.localeCompare(b.country))
-         .map(
-            (item, index) =>
-               `<div class="country-row" style="${
-                  index === 0 && `padding-top: 10px`
-               }">
-                  ${item.country}
-                  ${Flag(item.code)}
-                  
-               </div>`
-         )
-         .join('');
-
-      const top = document.createElement('div');
-      top.classList.add('top');
-      top.style.borderLeft = `4px solid ` + colorMap[id];
-      top.onclick = () => {
-         if (!mobileActive()) {
-            [...document.querySelectorAll('.bottom')]
-               .filter((x, i) => i !== index)
-               .forEach((b) => {
-                  b.style.maxHeight = '0px';
-               });
-            const curr = bottom.style.maxHeight;
-            bottom.style.maxHeight = curr === '0px' ? '500px' : 0;
-         } else {
-            this.setRightSectionContent(countries);
-            this.setForward();
-         }
+      node.style.borderLeft = `4px solid ` + colorMap[id];
+      node.onclick = () => {
+         this.setRightSectionContent(countries);
+         this.setForward();
       };
-      top.innerHTML = `
+      node.innerHTML = `
       <div class="top-inner">
       <div style="flex: 1;">
       <div>${Pill(classification, id)}</div>
@@ -174,23 +158,8 @@ class Sidebar {
    </div>
       </div>
       `;
-      node.appendChild(top);
-      node.appendChild(bottom);
+
       return node;
-   }
-
-   calculateHeights() {
-      const height = this.container.offsetHeight;
-      const sectionHeightSum = [...document.querySelectorAll('.section')]
-         .map((x) => x.offsetHeight)
-         .reduce((curr, total) => curr + total);
-
-      const bottoms = document.querySelectorAll('.bottom');
-      bottoms.forEach((b) => {
-         b.style.height = height - sectionHeightSum;
-      });
-
-      this.container.style.height = sectionHeightSum;
    }
 }
 
