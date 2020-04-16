@@ -11,6 +11,12 @@ const colors = {
 
 const colorMap = ['#000', colors.red, colors.teal, colors.purple];
 
+const classificationLegends = [
+   'Land, sea, and air borders are closed to all non-residents, except for some essential workers such as diplomats and air crew.',
+   'In many cases, major airports have closed to domestic air travel and international, commercial flights suspended.',
+   'Borders have been closed to certain countries and citizens deemed at higher risk of coronavirus transmission.',
+];
+
 const credentials = {
    id: 'gpk6hVhN',
    token: 'AFKCs6eeSxSYhpbswZsUhgA',
@@ -39,4 +45,5 @@ export {
    maxZoom,
    colorMap,
    mobileActive,
+   classificationLegends,
 };

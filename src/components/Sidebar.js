@@ -1,5 +1,5 @@
 import Pill from './Pill.js';
-import { mobileActive, colorMap } from '../config.js';
+import { mobileActive, colorMap, classificationLegends } from '../config.js';
 import wait from '../util/wait.js';
 import Flag from './Flag.js';
 import purgeChildren from '../util/purgeChildren.js';
@@ -157,9 +157,7 @@ class Sidebar {
       <div style="flex: 1" class="small">${countries.length} ${
          countries.length > 1 ? 'countries' : 'country'
       }</div>
-      
-      
-      <div class="section-label">This is a description that means the person can or cannot enter and!</div>
+      <div class="section-label">${classificationLegends[id - 1]}</div>
    </div>
    <div class="flag-section">
       ${countries
