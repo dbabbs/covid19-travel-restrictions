@@ -171,6 +171,10 @@ html {
    .section-label {
       display: none;
    }
+
+   .attribution a {
+      font-size: 9px;
+   }
 }
 
 .H_logo {
