@@ -73,12 +73,9 @@ styles:
 fonts:
   FiraGO:
     - weight: 400
-      url: "https://assets.vector.hereapi.com/fonts/FiraGO-Regular.ttf"
-    - weight: 400
-    - style: italics
-      url: "https://assets.vector.hereapi.com/fonts/FiraGO-Italic.ttf"
+      url: "./static/fonts/FiraGO-Regular.ttf"
     - weight: 500
-      url: "https://assets.vector.hereapi.com/fonts/FiraGO-Medium.ttf"
+      url: "./static/fonts/FiraGO-Medium.ttf"
 scene:
   background:
     color: global.background

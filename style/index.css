@@ -7,18 +7,18 @@
 
 @font-face {
    font-family: FiraGO;
-   src: url(../static/fonts/FiraGO-Regular.woff);
+   src: url(../static/fonts/FiraGO-Regular.ttf);
 }
 
 @font-face {
    font-family: FiraGO;
-   src: url(../static/fonts/FiraGO-Bold.woff);
+   src: url(../static/fonts/FiraGO-Bold.ttf);
    font-weight: bold;
 }
 
 @font-face {
    font-family: FiraGO;
-   src: url(../static/fonts/FiraGO-Medium.woff);
+   src: url(../static/fonts/FiraGO-Medium.ttf);
    font-weight: 500;
 }
 

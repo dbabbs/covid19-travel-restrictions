@@ -20,6 +20,7 @@ const classificationLegends = [
 const credentials = {
    id: 'gpk6hVhN',
    token: 'AFKCs6eeSxSYhpbswZsUhgA',
+   //PROD:
    apikey: 'qHbGACVC8wUgzipkERYFIvbK8ASY9UhPsKSGTB7quRI',
 };
 
