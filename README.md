@@ -1,5 +1,7 @@
 # Travel Restrictions during COVID-19
 
+![./covid19-restrictions.png](./covid19-restrictions.png)
+
 To run the project, set up a local server:
 
 ```
